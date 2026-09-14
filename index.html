@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Desafio de Desenvolvimento Web — WebJornal e Halloween</title>
+  
+  <!-- Fontes do Google e Ícones -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --cor-fundo: #090d16;
+      --cor-card: #131b2e;
+      --cor-borda: rgba(255, 255, 255, 0.1);
+      
+      --cor-primaria: #4338ca;      /* Azul índigo tech */
+      --cor-primaria-hover: #3730a3;
+      
+      --laranja-halloween: #ea580c;  /* Laranja abóbora */
+      --laranja-hover: #c2410c;
+      
+      --roxo-halloween: #7e22ce;     /* Roxo temático */
+      --verde-sucesso: #10b981;
+      
+      --texto-branco: #ffffff;
+      --texto-cinza: #94a3b8;
+      --texto-claro: #e2e8f0;
+      
+      --raio-borda: 14px;
+      --transicao: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background-color: var(--cor-fundo);
+      color: var(--texto-claro);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(67, 56, 202, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(234, 88, 12, 0.15) 0%, transparent 40%);
+      background-attachment: fixed;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* ==========================================================================
+       1. CABEÇALHO E HERO
+       ========================================================================== */
+    .header-evento {
+      text-align: center;
+      padding: 40px 0 25px 0;
+    }
+
+    .logo-box {
+      max-width: 320px;
+      margin: 0 auto 20px auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .logo-box img {
+      max-width: 100%;
+      height: auto;
+      max-height: 110px;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.4));
+    }
+
+    .badge-top {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(234, 88, 12, 0.18);
+      color: #fb923c;
+      border: 1px solid rgba(234, 88, 12, 0.4);
+      padding: 6px 14px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 14px;
+    }
+
+    .titulo-principal {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.7rem);
+      font-weight: 900;
+      color: var(--texto-branco);
+      line-height: 1.2;
+      margin-bottom: 20px;
+      letter-spacing: -0.5px;
+    }
+
+    .titulo-destaque {
+      background: linear-gradient(135deg, #f97316, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Meta Info: Data e Local */
+    .meta-container {
+      display: inline-flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--cor-borda);
+      padding: 10px 18px;
+      border-radius: 50px;
+      margin-top: 6px;
+    }
+
+    .meta-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--texto-branco);
+    }
+
+    .meta-pill i {
+      color: #38bdf8;
+    }
+
+    .meta-pill.local i {
+      color: #f43f5e;
+    }
+
+    .meta-divisor {
+      color: var(--cor-borda);
+      font-weight: 300;
+    }
+
+    /* ==========================================================================
+       2. CARDS PRINCIPAIS (SEÇÃO CENTRAL)
+       ========================================================================== */
+    .secao-cards {
+      padding: 30px 0 40px 0;
+    }
+
+    .grid-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .card-item {
+      background: var(--cor-card);
+      border: 1px solid var(--cor-borda);
+      border-radius: var(--raio-borda);
+      padding: 30px 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+      transition: var(--transicao);
+    }
+
+    .card-item:hover {
+      transform: translateY(-5px);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .card-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+    }
+
+    .card-desafio::before {
+      background: linear-gradient(90deg, #4338ca, #38bdf8);
+    }
+
+    .card-inscricao::before {
+      background: linear-gradient(90deg, #ea580c, #eab308);
+    }
+
+    .card-topo-icone {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+    }
+
+    .card-desafio .card-topo-icone {
+      background: rgba(67, 56, 202, 0.2);
+      color: #818cf8;
+      border: 1px solid rgba(67, 56, 202, 0.4);
+    }
+
+    .card-inscricao .card-topo-icone {
+      background: rgba(234, 88, 12, 0.2);
+      color: #fb923c;
+      border: 1px solid rgba(234, 88, 12, 0.4);
+    }
+
+    .card-titulo {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--texto-branco);
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+
+    .card-descricao {
+      color: var(--texto-cinza);
+      font-size: 0.95rem;
+      margin-bottom: 22px;
+      flex-grow: 1;
+    }
+
+    /* Botões Padrão */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 13px 20px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: var(--transicao);
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--texto-branco);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--texto-branco);
+    }
+
+    /* Destaque especial para inscrição no Card 2 */
+    .bloco-destaque-inscricao {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px dashed rgba(255, 255, 255, 0.15);
+    }
+
+    .btn-destaque-principal {
+      background: linear-gradient(135deg, #ea580c, #f97316);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(234, 88, 12, 0.4);
+      animation: pulse-glow 2.4s infinite;
+    }
+
+    .btn-destaque-principal:hover {
+      background: linear-gradient(135deg, #c2410c, #ea580c);
+      box-shadow: 0 6px 18px rgba(234, 88, 12, 0.6);
+      transform: scale(1.02);
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(234, 88, 12, 0.5); }
+      50% { box-shadow: 0 0 0 10px rgba(234, 88, 12, 0); }
+    }
+
+    /* ==========================================================================
+       3. RODAPÉ: HALLOWEEN & SUPORTE
+       ========================================================================== */
+    .footer-evento {
+      margin-top: auto;
+      background: #0b0f1a;
+      border-top: 1px solid var(--cor-borda);
+      padding: 45px 0 25px 0;
+      position: relative;
+    }
+
+    .caixa-halloween {
+      background: linear-gradient(180deg, rgba(126, 34, 206, 0.15) 0%, rgba(19, 27, 46, 0.6) 100%);
+      border: 1px solid rgba(126, 34, 206, 0.35);
+      border-radius: var(--raio-borda);
+      padding: 28px 24px;
+      margin-bottom: 35px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+
+    .halloween-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .halloween-titulo {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #f59e0b;
+    }
+
+    .halloween-texto-chamada {
+      font-size: 1rem;
+      color: var(--texto-claro);
+      margin-bottom: 18px;
+    }
+
+    .halloween-convite-box {
+      background: rgba(0, 0, 0, 0.3);
+      border-left: 4px solid #ea580c;
+      padding: 16px 18px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 20px;
+    }
+
+    .halloween-convite-box h4 {
+      color: #fb923c;
+      font-size: 1rem;
+      margin-bottom: 6px;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .halloween-convite-box p {
+      font-size: 0.95rem;
+      color: #cbd5e1;
+    }
+
+    /* Informações de Suporte e Contato */
+    .suporte-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 18px;
+      padding-top: 15px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .suporte-contato {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 0.95rem;
+    }
+
+    .suporte-contato a {
+      color: #38bdf8;
+      text-decoration: none;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: var(--transicao);
+    }
+
+    .suporte-contato a:hover {
+      text-decoration: underline;
+      color: #7dd3fc;
+    }
+
+    .btn-suporte-inscricao {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(234, 88, 12, 0.15);
+      color: #fb923c;
+      border: 1px solid rgba(234, 88, 12, 0.3);
+      padding: 8px 18px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 700;
+      transition: var(--transicao);
+    }
+
+    .btn-suporte-inscricao:hover {
+      background: rgba(234, 88, 12, 0.3);
+      color: #ffffff;
+      transform: translateY(-2px);
+    }
+
+    .copyright-text {
+      color: #64748b;
+      font-size: 0.8rem;
+      margin-top: 15px;
+    }
+
+    /* Responsividade */
+    @media (max-width: 650px) {
+      .header-evento { padding: 30px 0 20px 0; }
+      .card-item { padding: 22px 18px; }
+      .meta-container {
+        flex-direction: column;
+        border-radius: 12px;
+        gap: 6px;
+        padding: 12px 16px;
+      }
+      .meta-divisor { display: none; }
+      .suporte-contato { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       1. CABEÇALHO DO EVENTO
+       ========================================================================== -->
+  <header class="header-evento">
+    <div class="container">
+      
+      <!-- LOGO COM SUPORTE AUTOMÁTICO A FALLBACK -->
+      <div class="logo-box">
+        <img src="Logo-Evento.png" alt="Logo do Evento" onerror="this.onerror=null; this.style.display='none'; document.getElementById('logoFallback').style.display='block';">
+        <div id="logoFallback" style="display: none; font-family: 'Montserrat', sans-serif; font-size: 1.5rem; font-weight: 900; color: #fff; border: 2px dashed rgba(255,255,255,0.2); padding: 12px 24px; border-radius: 8px;">
+          <i class="fas fa-laptop-code"></i> EVENTO PROZ
+        </div>
+      </div>
+
+      <div class="badge-top">
+        <i class="fas fa-calendar-star"></i> Edição Especial Integrada
+      </div>
+
+      <h1 class="titulo-principal">
+        Desafio de Desenvolvimento Web — <span class="titulo-destaque">WebJornal e Halloween</span>
+      </h1>
+
+      <!-- Informações Principais: Data e Local -->
+      <div class="meta-container">
+        <div class="meta-pill">
+          <i class="far fa-calendar-check"></i>
+          <span>Data: <strong>29/10/2026</strong></span>
+        </div>
+        <span class="meta-divisor">•</span>
+        <div class="meta-pill local">
+          <i class="fas fa-map-marker-alt"></i>
+          <span>Local: <strong>PROZ</strong></span>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       2. CORPO PRINCIPAL (CARDS DAS DIRETRIZES E INSCRIÇÃO)
+       ========================================================================== -->
+  <main class="secao-cards">
+    <div class="container">
+      <div class="grid-cards">
+
+        <!-- CARD 1: SOBRE O DESAFIO (PDF) -->
+        <article class="card-item card-desafio">
+          <div>
+            <div class="card-topo-icone">
+              <i class="fas fa-file-pdf"></i>
+            </div>
+            <h2 class="card-titulo">Sobre o Desafio de Desenvolvimento Web</h2>
+            <p class="card-descricao">
+              Consulte as diretrizes oficiais, regras técnicas, cronograma e critérios de avaliação para a evolução do WebJornal <em>Ecos Técnicos</em>.
+            </p>
+          </div>
+
+          <div>
+            <a href="DESAFIO%20DE%20DESENVOLVIMENTO%20WEB.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+              <i class="fas fa-external-link-alt"></i> Acessar Manual do Desafio (PDF)
+            </a>
+          </div>
+        </article>
+
+        <!-- CARD 2: FORMULÁRIO DE INSCRIÇÃO (PDF + LINK FORMS EM DESTAQUE) -->
+        <article class="card-item card-inscricao">
+          <div>
+            <div class="card-topo-icone">
+              <i class="fas fa-edit"></i>
+            </div>
+            <h2 class="card-titulo">Formulário de Inscrição</h2>
+            <p class="card-descricao">
+              Baixe a ficha de inscrição em formato PDF para conferência ou inscreva sua equipe diretamente através do formulário digital oficial.
+            </p>
+          </div>
+
+          <div>
+            <!-- Link do PDF -->
+            <a href="Formul%C3%A1rio%20de%20inscri%C3%A7%C3%A3o.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="margin-bottom: 12px;">
+              <i class="fas fa-file-download"></i> Formulário em PDF
+            </a>
+
+            <!-- LINK DE INSCRIÇÃO EM DESTAQUE ABSOLUTO -->
+            <div class="bloco-destaque-inscricao">
+              <a href="https://forms.gle/naPxjfw4YBxRRFti8" target="_blank" rel="noopener noreferrer" class="btn btn-destaque-principal">
+                <i class="fas fa-paper-plane"></i> INSCREVA SUA EQUIPE AGORA
+              </a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- ==========================================================================
+       3. RODAPÉ (HALLOWEEN, EQUIPE ORGANIZADORA E CONTATO)
+       ========================================================================== -->
+  <footer class="footer-evento">
+    <div class="container">
+
+      <!-- BLOCO HALLOWEEN -->
+      <section class="caixa-halloween">
+        <div class="halloween-header">
+          <span style="font-size: 1.8rem;">🎃</span>
+          <h3 class="halloween-titulo">Bônus — Halloween!</h3>
+        </div>
+
+        <p class="halloween-texto-chamada">
+          🕷️ Além do desafio, também teremos uma comemoração de Halloween, com concurso de fantasias! 👻
+        </p>
+
+        <div class="halloween-convite-box">
+          <h4>Quer participar da equipe organizadora do Halloween?</h4>
+          <p>
+            🎃 A equipe ajudará a organizar o concurso e desenvolverá um aplicativo para escolher a melhor fantasia.
+          </p>
+        </div>
+
+        <div style="text-align: right;">
+          <a href="https://forms.gle/naPxjfw4YBxRRFti8" target="_blank" rel="noopener noreferrer" class="btn-suporte-inscricao">
+            <i class="fas fa-ghost"></i> Quero participar da organização
+          </a>
+        </div>
+      </section>
+
+      <!-- SUPORTE E DÚVIDAS -->
+      <div class="suporte-container">
+        <div class="suporte-contato">
+          <span><i class="fas fa-question-circle"></i> Dúvidas sobre os eventos e orientação:</span>
+          <a href="mailto:tds.juizdefora@gmail.com">
+            <i class="fas fa-envelope"></i> tds.juizdefora@gmail.com
+          </a>
+        </div>
+
+        <div>
+          <a href="https://forms.gle/naPxjfw4YBxRRFti8" target="_blank" rel="noopener noreferrer" class="btn-suporte-inscricao" style="border-color: rgba(255,255,255,0.2); color: #fff; background: rgba(255,255,255,0.06);">
+            <i class="fas fa-link"></i> Link direto para inscrições online
+          </a>
+        </div>
+
+        <p class="copyright-text">
+          &copy; 2026 Evento Integrado &bull; Escola Técnica PROZ &bull; Todos os direitos reservados.
+        </p>
+      </div>
+
+    </div>
+  </footer>
+
+</body>
+</html>
